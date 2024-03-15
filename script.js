@@ -34,7 +34,7 @@ class knights{
     [firstPosibleMove,secondPossiibleMove,thirdPossibleMove,fourthPossibleMove,fifthPossibleMove,sixPossibleMove,seventhPossibleMove,eightPossibleMove].forEach(move=>{
 
     
-        if(move[0]>-1&&move[0]<9&&move[1]>-1&&move[1]<9){
+        if(move[0]>-1&&move[0]<8&&move[1]>-1&&move[1]<8){
             Moves.push(move)
         }
 
@@ -45,7 +45,7 @@ class knights{
     return Moves
   }
   
-  createLinksForTheAdjecencyList(currentPosition,maximum=0,){
+  createLinksForTheAdjecencyList(currentPosition,maximum=0,OldNode=new adjecency()){
 
     if (maximum>3) {
       return
@@ -53,13 +53,32 @@ class knights{
     }
 
     let linkForposition=this.adjecencyCalculation(currentPosition);
-this.adjecencyList.push(new adjecency(currentPosition,linkForposition))
+    
+    let Node=new adjecency(currentPosition,linkForposition)
+this.adjecencyList.push(Node)
 maximum++;
 linkForposition.forEach(link=>{
 
-  this.createLinksForTheAdjecencyList(link,maximum)
+  this.createLinksForTheAdjecencyList(link,maximum,Node)
+ 
 
 })
+
+this.checkArrayForSimilarNodes(linkForposition,OldNode);
+  }
+
+  checkArrayForSimilarNodes(array,Node){
+
+    for (let i = 0; i < array.length; i++) {
+      if(JSON.stringify(array[i])===JSON.stringify(Node.currentPosition)){
+
+        array[i]=Node
+      }
+      
+      
+    }
+
+
   }
 
 
@@ -67,7 +86,7 @@ linkForposition.forEach(link=>{
 
 class adjecency{
 
-    constructor(currentPosition,possiblePoints){
+    constructor(currentPosition=null,possiblePoints=null){
 
         this.currentPosition=currentPosition;
         this.possiblePoints=possiblePoints
@@ -81,3 +100,4 @@ knightPlay.developBoard();
 
 console.log(knightPlay.createLinksForTheAdjecencyList([0,0]))
 console.log(knightPlay.adjecencyList)
+console.log(knightPlay.board)
