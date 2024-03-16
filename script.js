@@ -47,7 +47,8 @@ class knights{
   
   createLinksForTheAdjecencyList(currentPosition,maximum=0,OldNode=new adjecency()){
 
-    if (maximum>3) {
+    if (maximum>4) {
+      this.convertAllToNodes();
       return
       
     }
@@ -64,7 +65,7 @@ linkForposition.forEach(link=>{
 
 })
 
-this.checkArrayForSimilarNodes(linkForposition,OldNode);
+
   }
 
   checkArrayForSimilarNodes(array,Node){
@@ -78,6 +79,31 @@ this.checkArrayForSimilarNodes(linkForposition,OldNode);
       
     }
 
+
+  }
+
+
+  convertAllToNodes(){
+
+    for (let index = 0; index < this.adjecencyList.length; index++) {
+
+
+
+for (let j = 0; j < this.adjecencyList.length; j++) {
+ for (let x = 0; x < this.adjecencyList[j].possiblePoints.length; x++) {
+  if((Array.isArray(this.adjecencyList[j].possiblePoints[x]))){
+   
+  if((this.adjecencyList[index].currentPosition.toString())==(this.adjecencyList[j].possiblePoints[x].toString())){
+
+   this.adjecencyList[j].possiblePoints[x]=this.adjecencyList[index]
+ 
+  }
+ }
+ }
+  
+}
+      
+    }
 
   }
 
