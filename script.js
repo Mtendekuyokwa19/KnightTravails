@@ -14,8 +14,9 @@ class knights{
   }
 
   knightMoves(currentPosition,destination){
-
-
+    this.developBoard()
+this.createLinksForTheAdjecencyList(currentPosition)
+this.breadthFirstSearch(this.adjecencyList[0],destination)
   }
 
   adjecencyCalculation(currentPosition){
@@ -47,7 +48,7 @@ class knights{
   
   createLinksForTheAdjecencyList(currentPosition,maximum=0,OldNode=new adjecency()){
 
-    if (maximum>2) {
+    if (maximum>4) {
       this.convertAllToNodes();
       return
       
@@ -109,34 +110,64 @@ for (let j = 0; j < this.adjecencyList.length; j++) {
 
   queue= new Queue();
 
+  chain=new PredecessorChain();
 
-  breadthFirstSearch(value){
+addToChain(value){
+
+let newValue=new PredecessorChain(value,this.chain);
+this.chain=newValue;
+
+}
+  breadthFirstSearch(value,destination){
+    
 this.queue.enqueue(value);
+let previousValue={prev:null};
 
+let newValue=new PredecessorChain(value,this.chain);
 while (!(this.queue.isEmpty())) {
   value=this.queue.dequeue()
-console.log(value)
+
 if ((value===undefined)) {
+
+  return 
+}
+
+if(value.currentPosition.toString()===destination.toString()){
+
+console.log(value.currentPosition,previousValue.prev)
+
 
   return
 }
+
+if (value.visted==true) {
+
+}
   if (value.visted===false) {
 
-    console.log(value.currentPosition+"=>")
+    // console.log(value.currentPosition+"=>")
 
     value.visted=true;
+    previousValue.prev=previousValue.prev+" "
 
+
+   
     for (let i = 0; i < value.possiblePoints.length; i++) {
     
       if (!(Array.isArray(value.possiblePoints[i]))) {
         if (value.possiblePoints[i].visted===false) {
         
           this.queue.enqueue(value.possiblePoints[i])
+          
+         
+          
         }
       }
      
       
     }
+    previousValue.prev=value.currentPosition+" =>"+previousValue.prev;
+  
     
   }
   
@@ -156,6 +187,7 @@ class adjecency{
         this.currentPosition=currentPosition;
         this.possiblePoints=possiblePoints;
         this.visted=false
+        this.predecessor=null
 
     }
 }
@@ -188,12 +220,15 @@ class Queue {
 	}
 }
 
+class PredecessorChain{
+
+  constructor(currentPosition,tail=null){
+    this.currentPosition=currentPosition;
+    this.tail=tail;
+  }
+
+}
 
 let knightPlay=new knights();
 
-knightPlay.developBoard();
-knightPlay.createLinksForTheAdjecencyList([0,0])
-console.log(knightPlay.adjecencyList)
-console.log(knightPlay.board)
-
-knightPlay.breadthFirstSearch(knightPlay.adjecencyList[0])
+knightPlay.knightMoves([3,3],[4,3])
