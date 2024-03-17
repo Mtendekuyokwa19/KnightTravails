@@ -47,7 +47,7 @@ class knights{
   
   createLinksForTheAdjecencyList(currentPosition,maximum=0,OldNode=new adjecency()){
 
-    if (maximum>4) {
+    if (maximum>2) {
       this.convertAllToNodes();
       return
       
@@ -107,6 +107,45 @@ for (let j = 0; j < this.adjecencyList.length; j++) {
 
   }
 
+  queue= new Queue();
+
+
+  breadthFirstSearch(value){
+this.queue.enqueue(value);
+
+while (!(this.queue.isEmpty())) {
+  value=this.queue.dequeue()
+console.log(value)
+if ((value===undefined)) {
+
+  return
+}
+  if (value.visted===false) {
+
+    console.log(value.currentPosition+"=>")
+
+    value.visted=true;
+
+    for (let i = 0; i < value.possiblePoints.length; i++) {
+    
+      if (!(Array.isArray(value.possiblePoints[i]))) {
+        if (value.possiblePoints[i].visted===false) {
+        
+          this.queue.enqueue(value.possiblePoints[i])
+        }
+      }
+     
+      
+    }
+    
+  }
+  
+}
+
+  }
+
+
+
 
 }
 
@@ -115,15 +154,46 @@ class adjecency{
     constructor(currentPosition=null,possiblePoints=null){
 
         this.currentPosition=currentPosition;
-        this.possiblePoints=possiblePoints
+        this.possiblePoints=possiblePoints;
+        this.visted=false
 
     }
 }
 
+class Queue {
+	constructor() {
+		this.items = {}
+		this.frontIndex = 0
+		this.backIndex = 0
+	}
+	enqueue(item) {
+		this.items[this.backIndex] = item
+		this.backIndex++
+		return item + ' inserted'
+	}
+	dequeue() {
+		const item = this.items[this.frontIndex]
+		delete this.items[this.frontIndex]
+		this.frontIndex++
+		return item
+	}
+  isEmpty(){
+    return this.items.length == 0;
+  }
+	peek() {
+		return this.items[this.frontIndex]
+	}
+	get printQueue() {
+		return this.items;
+	}
+}
+
+
 let knightPlay=new knights();
 
 knightPlay.developBoard();
-
-console.log(knightPlay.createLinksForTheAdjecencyList([0,0]))
+knightPlay.createLinksForTheAdjecencyList([0,0])
 console.log(knightPlay.adjecencyList)
 console.log(knightPlay.board)
+
+knightPlay.breadthFirstSearch(knightPlay.adjecencyList[0])
