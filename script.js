@@ -134,7 +134,7 @@ if ((value===undefined)) {
 
 if(value.currentPosition.toString()===destination.toString()){
 
-console.log(value.currentPosition,previousValue.prev)
+console.log(value)
 
 
   return
@@ -158,15 +158,15 @@ if (value.visted==true) {
         if (value.possiblePoints[i].visted===false) {
         
           this.queue.enqueue(value.possiblePoints[i])
-          
+          value.possiblePoints[i].predecessor=value
          
           
         }
       }
      
-      
+      previousValue.prev=previousValue.prev+""
     }
-    previousValue.prev=value.currentPosition+" =>"+previousValue.prev;
+  
   
     
   }
