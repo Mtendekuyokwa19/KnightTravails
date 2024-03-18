@@ -46,9 +46,9 @@ this.breadthFirstSearch(this.adjecencyList[0],destination)
     return Moves
   }
   
-  createLinksForTheAdjecencyList(currentPosition,maximum=0,OldNode=new adjecency()){
+  createLinksForTheAdjecencyList(currentPosition,maximum=1,OldNode=new adjecency(),){
 
-    if (maximum>4) {
+    if (maximum>8) {
       this.convertAllToNodes();
       return
       
@@ -110,18 +110,23 @@ for (let j = 0; j < this.adjecencyList.length; j++) {
 
   queue= new Queue();
 
-  chain=new PredecessorChain();
 
-addToChain(value){
+readTheNode(value){
 
-let newValue=new PredecessorChain(value,this.chain);
-this.chain=newValue;
+  while(!(value.predecessor===null)){
+
+    console.log(value.currentPosition)
+
+    value=value.predecessor;
+  }
+
+
 
 }
   breadthFirstSearch(value,destination){
     
 this.queue.enqueue(value);
-let previousValue={prev:null};
+
 
 let newValue=new PredecessorChain(value,this.chain);
 while (!(this.queue.isEmpty())) {
@@ -134,7 +139,7 @@ if ((value===undefined)) {
 
 if(value.currentPosition.toString()===destination.toString()){
 
-console.log(value)
+this.readTheNode(value)
 
 
   return
@@ -148,7 +153,7 @@ if (value.visted==true) {
     // console.log(value.currentPosition+"=>")
 
     value.visted=true;
-    previousValue.prev=previousValue.prev+" "
+   
 
 
    
@@ -164,7 +169,7 @@ if (value.visted==true) {
         }
       }
      
-      previousValue.prev=previousValue.prev+""
+     
     }
   
   
@@ -231,4 +236,4 @@ class PredecessorChain{
 
 let knightPlay=new knights();
 
-knightPlay.knightMoves([3,3],[4,3])
+knightPlay.knightMoves([0,0],[7,7])
