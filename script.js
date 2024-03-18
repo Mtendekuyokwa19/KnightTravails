@@ -112,13 +112,17 @@ for (let j = 0; j < this.adjecencyList.length; j++) {
 
 
 readTheNode(value){
-
+let nodes=[];
   while(!(value.predecessor===null)){
 
-    console.log(value.currentPosition)
-
+nodes.push(value.currentPosition);
     value=value.predecessor;
   }
+for (let index = nodes.length-1; index > -1; index--) {
+  
+  console.log(nodes[index])
+  
+}
 
 
 
@@ -236,4 +240,4 @@ class PredecessorChain{
 
 let knightPlay=new knights();
 
-knightPlay.knightMoves([0,0],[7,7])
+knightPlay.knightMoves([3,3],[4,3])
